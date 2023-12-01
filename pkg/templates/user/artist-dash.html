@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arte Subterráneo - Music Page</title>
+   
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../../static/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+    
+
+    <style>
+        body {
+            background-color: #333;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        
+        
+        .navbar-brand {
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .navbar-toggler-icon {
+            background-color: white;
+        }
+        
+        .nav-link {
+            color: white;
+        }
+.user-links .nav-link {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px; 
+}
+
+.user-links .nav-link:hover {
+   
+    color: #007bff; 
+}
+        .select-genre {
+            position: relative;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        #genre-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 10px 30px 10px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #007bff;
+            font-size: 16px;
+            width: 200px;
+            cursor: pointer;
+            color: white;
+        }
+        .arrow-down {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0);
+            pointer-events: none;
+        }
+        .container {
+            background-color: #333;
+            padding: 20px;
+        }
+        .album-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .album-index {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+            padding: 5px 10px;
+        }
+        .album-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .artist {
+            font-size: 14px;
+            color: #777;
+        }
+        .dashboard-content {
+            background-color: #1c1c1c;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .no-bullet {
+            list-style: none;
+            padding-left: 0;
+        }
+        .no-bullet li a {
+
+            text-decoration: none;
+            color: white;
+        }
+.search-bar {
+    display: flex;
+    align-items: center; 
+    margin-right: 20px; 
+    background-color: rgb(0,0,255);
+}
+
+.search-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    border-radius: 20px; 
+    margin:5px
+}
+        .search-input {
+            flex: 1; 
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 20px; 
+            background-color: rgb(255, 255, 255); 
+            color: rgb(0, 0, 0);
+            outline: none; 
+            margin-right: 0px; 
+        }
+.search-button:hover {
+            background-color: #0056b3;
+        }
+
+     
+
+      
+        
+
+
+        .footer {
+            background-color: rgb(0,0,255);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(0, 0, 255);">
+        <div class="container" style="background-color: rgb(0, 0, 255);">
+            <a class="navbar-brand text-white" href="#">Arte Subterráneo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <div class="w-50">
+                    <form class="d-flex" method="POST" action="{{ url_for('search') }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input class="form-control me-2" type="search" name="search_term" placeholder="Search for artist or song" aria-label="Search">
+                        <button class="btn btn-light" type="submit">Search</button>
+                    </form>
+                </div>
+                <div class="navbar-nav">
+                    <a class="nav-link text-white" href="{{ url_for('user') }}">Home</a>
+                    <a class="nav-link text-white" href="/">Listen Now</a>
+                    <a class="nav-link text-white" href="/upload/tracks/dashboard">Upload Songs</a>
+                    <a class="nav-link text-white" href="/alluploads">View Uploads</a>
+                </div>
+                <div class="dropdown">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if userdeets %}
+                        <img src="/static/profiles/{{userdeets.profilepicture }}" alt="Profile" width="70" height="70" class="rounded-circle">
+                        {% else %}
+                        <img src="/static/profiles/emptyprofile.webp" alt="Profile" width="70" height="70" class="rounded-circle">
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="/changeprofile">Upload a Profile</a></li>
+                        <li><a class="dropdown-item" href="/changeprofile">Change Profile Picture</a></li>
+                        <li><a class="dropdown-item" href="/upload/tracks/dashboard">Upload Songs</a></li>
+                        <li><a class="dropdown-item" href="/upload/tracks/dashboard">Upload Album</a></li>
+                        <li><a class="dropdown-item" href="/create/playlist">Upload Playlist</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('about') }}">About</a></li>
+                        <li><a class="dropdown-item" href="/select-genre">Choose the mood | Genre</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ url_for('logout') }}">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    
+<br>
+<br>
+    
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="album-index">1</div>
+                        <a href="/topsongs">
+                            <img src="../../static/songcover1.jpg" alt="Top Songs" class="img-fluid rounded card-img-top">
+                        </a>
+                        <div class="album-details">
+                            <h4 class="card-title mt-3" style="color: black;">Stream Songs</h4>
+                            <p class="card-text artist"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="album-index">2</div>
+                        <a href="/topalbums">
+                            <img src="../../static/songcover2.jpg" alt="Top Albums" class="img-fluid rounded card-img-top">
+                        </a>
+                        <div class="album-details">
+                            <h4 class="card-title mt-3" style="color: black;">Stream Albums</h4>
+                            <p class="card-text artist"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="album-index">3</div>
+                        <a href="/playlist">
+                            <img src="../../static/songcover3.jpeg" alt="Hottest Playlists" class="img-fluid rounded card-img-top">
+                        </a>
+                        <div class="album-details">
+                            <h4 class="card-title mt-3" style="color: black;">Your Playlists</h4>
+                            <p class="card-text artist"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+    <div class="footer">
+        <p>&copy; 2023 Michel. All rights reserved. | Designed by Michel Akerele</p>
+    </div>
+    
+    <script src="../../static/jquery.min.js"></script>
+    <script src="/static/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        
+    </script>
+</body>
+</html>

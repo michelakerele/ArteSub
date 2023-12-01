@@ -1,0 +1,55 @@
+{% extends "user_admin/layout.html" %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <h1>Create an Album</h1>
+
+    <form method="POST" enctype="multipart/form-data" class="mt-4">
+        {{ form.hidden_tag() }}
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flash">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div class="mb-3">
+            {{ form.album_title.label(class="form-label") }}
+            {{ form.album_title(class="form-control", size=32) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.album_tracks.label(class="form-label d-block") }}
+            {% for track_id, track_title in form.album_tracks.choices %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="album_tracks" value="{{ track_id }}" id="track{{ track_id }}">
+                    <label class="form-check-label" for="track{{ track_id }}">
+                        {{ track_title }}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.cover_art.label(class="form-label d-block") }}
+            {{ form.cover_art(class="form-control") }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+<br>
+<br>
+<br>
+<br>
+{% endblock content %}

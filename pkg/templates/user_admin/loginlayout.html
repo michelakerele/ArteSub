@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arte Subterráneo</title>
+   
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="static/animate.min.css">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+        
+        .navbar {
+            background-color: blue;
+        }
+        
+        .navbar-dark .navbar-toggler-icon {
+            background-color: white;
+        }
+        
+        .nav-link {
+            color: white;
+        }
+        
+        .card {
+            background-color: blue;
+            color: white;
+        }
+        
+        .nav-tabs .nav-link {
+            color: white;
+        }
+        
+        body {
+        background-image: url("/static/bg3.jpg");
+        background-size: cover; 
+        background-repeat: no-repeat; 
+        background-attachment: fixed; 
+        color: white;
+    }
+    form {
+  border: 3px solid #2600ff; 
+  border-radius: 30px   ;
+  padding: 20px; 
+}
+
+
+        .footer {
+            background-color:blue;
+            color: white;
+            padding:20px ;
+            text-align: center;
+            width: 100%;
+            height: 100px;
+        
+        }
+        
+        .nav-tabs .nav-link.active {
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <span class="navbar-brand " style="color: antiquewhite;">Arte Subterráneo</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+        </div>
+    </nav>
+ 
+    <div class="container mt-5" style="height: 550px;">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Welcome to Arte Subterráneo</h1>
+                <p>Login to Upload a Song.</p>
+            </div>
+           
+                    <div class="card-body form-group outline col-6">
+                        
+                            {% block content %}
+                            
+
+
+                            {% endblock content %}
+
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+    <div class="footer fixed-bottom" style="height: fit-content;">
+        <p>&copy; 2023 TheCheat23. All rights reserved. | Designed by Michel Akerele</p>
+    </div>
+    
+    
+    <script src="static/jquery.min.js.js"></script>
+    <script> 
+    
+  </script>
+</body>
+</html>

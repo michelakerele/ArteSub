@@ -1,0 +1,150 @@
+{% extends "user_admin/layout.html" %}
+{% block content %}
+<p>Note: <span style="color: red;">The Playlist is made the momemnt you clck on the "Create Playlist" button </span></p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <form id="playlist-form" class="mb-4">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="form-group">
+                    <label for="playlist-name">Playlist Name:</label>
+                    <input type="text" class="form-control" id="playlist-name" placeholder="Enter playlist name">
+                </div>
+                <button type="submit" class="btn btn-primary">Create Playlist</button>
+            </form>
+
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="search-input" placeholder="Search for songs or albums">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="load-data-btn">Search</button>
+                </div>
+            </div>
+
+            <div id="data-list"></div>
+
+            <button id="add-to-playlist-btn" class="btn btn-success mt-3">Add to Selected songs</button>
+        </div>
+
+        <div class="col-md-6">
+            <h2 class="mt-4 mb-3">Selected Songs</h2>
+            <ul id="selected-songs" class="list-group"></ul>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+    <script>
+        $(document).ready(function() {
+            var allDataArray = []; // Data array to store all loaded songs and albums
+            var selectedSongs = []; // Selected songs array to store user-selected songs
+
+            function loadData() {
+                var searchQuery = $('#search-input').val();
+                $.ajax({
+                    url: '/get_data',
+                    type: 'GET',
+                    data: { query: searchQuery },
+                    success: function(response) {
+                        allDataArray = response.data;
+                        var dataHtml = '<ul>';
+                        allDataArray.forEach(function(item, index) {
+                            var checkboxId = 'checkbox-' + index;
+                            dataHtml += '<li>';
+                            dataHtml += '<input type="checkbox" id="' + checkboxId + '" data-trackid="' + item.id + '">';
+                            if (item.type === 'song') {
+                                dataHtml += ' Song: ' + item.title + ' by ' + item.artist;
+                            } else if (item.type === 'album') {
+                                dataHtml += ' Album: ' + item.title + ' by ' + item.artist;
+                            }
+                            dataHtml += '</li>';
+                        });
+                        dataHtml += '</ul>';
+                        $('#data-list').html(dataHtml);
+
+                        selectedSongs.forEach(function(selectedSong) {
+                            var index = allDataArray.findIndex(function(item) {
+                                return item.id === selectedSong.id && item.type === selectedSong.type;
+                            });
+                            if (index !== -1) {
+                                $('#checkbox-' + index).prop('checked', true);
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+
+            $('#load-data-btn').click(loadData);
+
+            function addToPlaylist() {
+                selectedSongs = [];
+                allDataArray.forEach(function(item, index) {
+                    var checkboxId = '#checkbox-' + index;
+                    if ($(checkboxId).prop('checked')) {
+                        selectedSongs.push(item);
+                    }
+                });
+                var selectedSongsHtml = '';
+                selectedSongs.forEach(function(song) {
+                    selectedSongsHtml += '<li>';
+                    if (song.type === 'song') {
+                        selectedSongsHtml +=  song.title + ' by ' + song.artist;
+                    } else if (song.type === 'album') {
+                        selectedSongsHtml +=  song.title + ' by ' + song.artist;
+                    }
+                    selectedSongsHtml += '</li>';
+                });
+                $('#selected-songs').html(selectedSongsHtml);
+            }
+
+            $('#add-to-playlist-btn').click(addToPlaylist);
+
+            $('#playlist-form').submit(function(event) {
+                event.preventDefault();
+                var playlistName = $('#playlist-name').val();
+
+                if (selectedSongs.length === 0) {
+                    alert('Please select songs to add to the playlist.');
+                    return;
+                }
+
+                // Get CSRF token from the hidden input field
+                var csrfToken = $('input[name=csrf_token]').val();
+
+                // Include CSRF token in the headers of the AJAX request
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-Token': csrfToken
+                    }
+                });
+
+                $.ajax({
+                    url: '/add_to_playlist',
+                    type: 'POST',
+                    data: JSON.stringify({ playlistName: playlistName, selectedSongs: selectedSongs }),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        console.log(response.message);
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+{%endblock%}

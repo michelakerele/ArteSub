@@ -1,0 +1,65 @@
+{% extends "admin/sup_admin_layout.html" %}
+{%block content%}
+<main class="container mt-4">
+    <h1 class="display-4 text-primary mb-4" style="color: aliceblue;">All USers</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="" class="text-primary">Admin Dashboard</a></li>
+        <li class="breadcrumb-item active">Users</li>
+    </ol>
+    <div class="card mb-4">
+        
+    </div>
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <i class="fas fa-table me-1"></i> Users Table
+        </div>
+        <div class="card-body">
+            
+            <table class="table table-bordered table-hover">
+                <thead class="bg-info text-white">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Users</th>
+                        <th scope="col">Profile Picture</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                    <tr>
+                        {% for users in users %}
+                        <td scope="row" style="color:black">{{ loop.index }}</td>
+                        
+                    
+                        
+                        <td><a href="{{url_for('viewusersdeets',userid=users.userid)}}">{{users.username}}</a></td>
+                       
+                        <td><img src="/static/profiles/{{ users.profilepicture }}" height="100" class="rounded-circle"></td>
+                        <td>
+                            <form method="post" action="{{ url_for('delete_user', user_id=users.userid) }}" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                        {%endfor%}
+                    
+                   
+                </tbody>
+            </table>
+            
+
+            </div>
+            
+        </div>
+    </div>
+</main>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock content %}

@@ -1,0 +1,54 @@
+{% extends "user/loginlayout.html" %}
+{% block content %}
+<form method="POST" style="border-radius: 30px;">
+{%set m = get_flashed_messages(with_categories=True)%}    
+    {% if m: %}
+    {%for cat,i in m%}
+        {% if cat=='error'%}
+            <div class="alert alert-danger">{{i}}</div>
+        {%else%}
+            <div class="alert alert-danger">{{i}}</div>
+        {%endif%}
+    {%endfor%}
+    {%endif%}
+
+    
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+        <div class="form-group">
+            {{regform.FirstName.label}}
+            {{regform.FirstName(class_='form-control',placeholder="Enter your Full Name")}}
+        </div>
+    
+        <br>
+        <div class="form-group">
+            {{regform.Username.label}}
+            {{regform.Username(class_='form-control',placeholder="Enter a Username")}}
+        </div>
+        <br>
+        <div class="form-group">
+            {{regform.Email.label}}
+            {{regform.Email(class_='form-control',placeholder="Enter Your Email")}}
+        </div>
+        <br>
+        <div class="form-group">
+            {{regform.Password.label}}
+            {{regform.Password(class_='form-control',placeholder="Enter Your Password")}}
+        </div>
+        <br>
+        <div class="form-group">
+            {{regform.ConfirmPassword.label}}
+            {{regform.ConfirmPassword(class_='form-control',placeholder="Confirm your Password")}}
+        </div>
+        <br>
+        {{regform.btn(class_="btn btn-primary")}}
+        <span>Registered ? <a href="/login" style="color: aliceblue;">Login</a></span>
+    </form>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends "admin/sup_admin_layout.html" %}
+
+
+{% block content %}
+<main class="container mt-4">
+    <h1 class="display-4 mb-4">Genres</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="list-group mb-3">
+                    {% for message in messages %}
+                        <li class="list-group-item list-group-item-success">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Genre Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for genre in genres %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ genre.genre_name }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('delete_genre', genre_id=genre.genreid) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">No genres available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a class="btn btn-dark col-12" href="/add_genre">Add Genre</a>
+    </div>
+</main>
+{% endblock content %}

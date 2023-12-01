@@ -1,0 +1,28 @@
+{% extends "user_admin/layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Songs in {{ genre.genre_name }}</h1>
+    <div class="row">
+        {% if songs %}
+            {% for song in songs %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="/static/songcover/{{ song.track_cover }}" class="card-img-top" alt="{{ song.title }} Cover">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: black;">{{ song.title }}</h5>
+                        <p class="card-text" style="color: black;">Artist: {{ song.trackrel.username }}</p>
+                        <a href="{{ url_for('play_song', id=song.trackid) }}" class="btn btn-primary">Listen Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-md-12">
+                <p>No songs available in the selected genre.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

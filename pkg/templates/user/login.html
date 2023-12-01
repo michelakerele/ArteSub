@@ -1,0 +1,29 @@
+{% extends "user/loginlayout.html" %}
+{% block content %}
+
+
+
+
+                                
+    <form id="loginForm" method="POST" style="border-radius: 30px;">
+        <div class="form-group">
+            <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+            {{reg.Username.label}}
+            {{reg.Username(class_='form-control',placeholder="Enter your username")}}
+        </div>
+        <br>
+        <div class="form-group">
+            {{reg.Password.label}}
+            {{reg.Password(class_='form-control',placeholder="Enter your password")}}
+        </div>
+        <br>
+        
+        <input type="submit" name="btn" class="btn btn-primary col-md-12 " id="loginButton" value="Log In">
+
+        <span>Not Registered ? <a href="/register" style="color: aliceblue;">Sign up</a></span>
+    </form>
+
+
+
+
+{% endblock content %}

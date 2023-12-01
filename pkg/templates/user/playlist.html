@@ -1,0 +1,32 @@
+{% extends "user/layout.html" %}
+{% block content %}
+
+<div class="row" style="padding-top: 100px;">
+    {% for playlist in playlist %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card ">
+            <img src="/static/playlistdef.png" class="card-img-top image-container" alt="Playlist Image">
+            <div class="card-body">
+                <h5 class="card-title" style="color: black;">{{ playlist.playlist_name }}</h5>
+                <p class="card-text" style="color: black;">Creator:  {{playlist.user.username }}</p>
+                
+                <a href="{{ url_for('play_playlist', playlist_id=playlist.playlistid) }}">Listen Now</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<script src="/static/jquery.min.js.js"></script>
+<script>
+    $(document).ready(function(){
+        // JavaScript code to be executed after the page loads
+    });
+</script>
+
+{% endblock content %}

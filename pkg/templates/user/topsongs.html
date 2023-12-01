@@ -1,0 +1,35 @@
+{% extends "user/layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        {% if songs %}
+            {% for song in songs %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="/static/songcover/{{ song.track_cover }}" class="card-img-top img-fluid" alt="Song Cover">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: black;">{{ song.title }}</h5>
+                        <p class="card-text" style="color: black;">Artist: {{ song.trackrel.username }}</p>
+                        <a href="{{ url_for('play_song', id=song.trackid) }}" class="btn btn-primary">Listen Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center mt-5">
+                <h2>No songs available</h2>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock content %}

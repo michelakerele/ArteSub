@@ -1,0 +1,14 @@
+{% extends "user_admin/layout.html" %}
+
+{% block content %}
+<div class="content" style="background-color: #333; padding: 3em; text-align: center; color: white;">
+    <h3 style="padding-top: 200px;">Welcome, {{ session.get('user') }}!</h3>
+    <p>Upload a Song or Album</p>
+
+    <div class="mt-4">
+        <a href="/admin/addsongs" class="btn btn-primary mr-3">Add Songs</a>
+        <span>or</span>
+        <a href="/create/album" class="btn btn-primary ml-3">Add Album</a>
+    </div>
+</div>
+{% endblock %}

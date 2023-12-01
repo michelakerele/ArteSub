@@ -1,0 +1,74 @@
+{% extends "user_admin/layout.html" %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+
+<main class="container mt-4">
+    <h1 class="display-4 text-primary mb-4" style="color: aliceblue;">All Songs Uploaded 🎵</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}" class="text-primary">Dashboard</a></li>
+        <li class="breadcrumb-item active">Songs</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-body">
+            DataTables is a third-party plugin that is used to generate the demo table below.
+            <a href="{{ url_for('addsongs') }}" class="btn btn-outline-primary">Add Songs</a>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <i class="fas fa-table me-1"></i> Songs Table
+        </div>
+        <div class="card-body">
+            {% if songs %}
+            <table class="table table-bordered table-hover">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="list-group mb-3">
+                        {% for message in messages %}
+                            <li class="list-group-item list-group-item-success">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+                <thead class="bg-info text-white">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Songs</th>
+                        <th scope="col">Cover</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for song in songs %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ song.title }}</td>
+                        <td><img src="/static/songcover/{{ song.track_cover }}" height="100" class="rounded-circle"></td>
+                        <td>
+                            <a href="{{ url_for('delete_song', id=song.trackid) }}" class="btn btn-sm btn-warning">Delete</a>
+                            <!-- Add delete button if needed -->
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="alert alert-info mt-4">No Songs Found... <a href="{{ url_for('addsongs') }}" class="alert-link">Click Here to Add a Song</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</main>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock content %}

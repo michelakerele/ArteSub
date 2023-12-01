@@ -1,0 +1,59 @@
+{% extends "user/layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">Search Results of {{ search_term }}</h1>
+        </div>
+    </div>
+
+    {% if songs %}
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="mb-3">Songs</h2>
+            <ul class="list-group">
+                {% for song in songs %}
+                <li class="list-group-item">
+                    <a href="{{ url_for('play_song', id=song.trackid) }}">{{ song.title }}</a> by {{ song.trackrel.username }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-md-12">
+            <p>No Song called {{ search_term }}.</p>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if artists %}
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h2 class="mb-3">Artists</h2>
+            <ul class="list-group">
+                {% for artist in artists %}
+                <li class="list-group-item">
+                    {{ artist.username }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-md-12">
+            <p>No Artist called {{search_term}}.</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .list-group-item {
+        border: none;
+    }
+</style>
+{% endblock content %}

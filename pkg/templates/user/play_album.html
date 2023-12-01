@@ -1,0 +1,35 @@
+{% extends "user/layout.html" %}
+
+{% block content %}
+{{tracks.album_tracks}}
+    <div class="container mt-5">
+        <h1 class="mb-3">Now Playing: {{ album.albumtitle }}</h1>
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Tracks:</h2>
+                <ul class="list-group">
+                    {% for track in tracks %}
+                        <li class="list-group-item">{{ track.title }}</li>
+                        <br>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h2>Audio Player:</h2>
+                {% for track in tracks %}
+                <audio controls class="w-100">
+                    
+                        <source src="/static/uploaded_songs/{{ track.fileLocation }}" type="audio/mpeg" title="{{ track.title }}">
+                   <br>
+                    Your browser does not support the audio element.
+                </audio>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    {% endblock content %}

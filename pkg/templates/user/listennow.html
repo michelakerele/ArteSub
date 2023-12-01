@@ -1,0 +1,45 @@
+{% extends "user/layout.html" %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <!-- Left Column -->
+        <div class="col-md-8">
+            <h1>Now Playing: {{ track.title }}</h1>
+            <div class="audio-player">
+                <h2>{{ track.title }}</h2>
+                <audio controls>
+                    <source src="/static/uploaded_songs/{{ songs.fileLocation }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-md-4">
+            <h2>Song Cover</h2>
+            <img src="/static/songcover/{{track.track_cover}}" alt="Song Cover" class="img-fluid">
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock content %}
+
